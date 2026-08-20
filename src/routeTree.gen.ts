@@ -10,12 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as DriverIndexRouteImport } from './routes/driver.index'
+import { Route as DriverTrackingRouteImport } from './routes/driver.tracking'
 import { Route as PassengerIndexRouteImport } from './routes/passenger.index'
 import { Route as PassengerBusIdRouteImport } from './routes/passenger.bus.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DriverIndexRoute = DriverIndexRouteImport.update({
+  id: '/driver/',
+  path: '/driver/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DriverTrackingRoute = DriverTrackingRouteImport.update({
+  id: '/driver/tracking',
+  path: '/driver/tracking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PassengerIndexRoute = PassengerIndexRouteImport.update({
@@ -31,30 +49,61 @@ const PassengerBusIdRoute = PassengerBusIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/driver/tracking': typeof DriverTrackingRoute
+  '/driver/': typeof DriverIndexRoute
   '/passenger/': typeof PassengerIndexRoute
   '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/driver/tracking': typeof DriverTrackingRoute
+  '/driver': typeof DriverIndexRoute
   '/passenger': typeof PassengerIndexRoute
   '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/driver/tracking': typeof DriverTrackingRoute
+  '/driver/': typeof DriverIndexRoute
   '/passenger/': typeof PassengerIndexRoute
   '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/passenger/' | '/passenger/bus/$id'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/driver/tracking'
+    | '/driver/'
+    | '/passenger/'
+    | '/passenger/bus/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/passenger' | '/passenger/bus/$id'
-  id: '__root__' | '/' | '/passenger/' | '/passenger/bus/$id'
+  to:
+    | '/'
+    | '/admin'
+    | '/driver/tracking'
+    | '/driver'
+    | '/passenger'
+    | '/passenger/bus/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/driver/tracking'
+    | '/driver/'
+    | '/passenger/'
+    | '/passenger/bus/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  DriverTrackingRoute: typeof DriverTrackingRoute
+  DriverIndexRoute: typeof DriverIndexRoute
   PassengerIndexRoute: typeof PassengerIndexRoute
   PassengerBusIdRoute: typeof PassengerBusIdRoute
 }
@@ -66,6 +115,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/driver/': {
+      id: '/driver/'
+      path: '/driver'
+      fullPath: '/driver/'
+      preLoaderRoute: typeof DriverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/driver/tracking': {
+      id: '/driver/tracking'
+      path: '/driver/tracking'
+      fullPath: '/driver/tracking'
+      preLoaderRoute: typeof DriverTrackingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/passenger/': {
@@ -87,6 +157,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  DriverTrackingRoute: DriverTrackingRoute,
+  DriverIndexRoute: DriverIndexRoute,
   PassengerIndexRoute: PassengerIndexRoute,
   PassengerBusIdRoute: PassengerBusIdRoute,
 }

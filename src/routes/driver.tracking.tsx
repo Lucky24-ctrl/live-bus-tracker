@@ -8,7 +8,7 @@ import { useFleet } from "@/hooks/use-fleet";
 import { locationPushIntervalMs } from "@/lib/config";
 import { pushLocation } from "@/lib/transit";
 
-type TrackingSearch = { busId?: string };
+type TrackingSearch = { busId?: string | undefined };
 
 export const Route = createFileRoute("/driver/tracking")({
   validateSearch: (search: Record<string, unknown>): TrackingSearch => ({

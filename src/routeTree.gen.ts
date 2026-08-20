@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PassengerIndexRouteImport } from './routes/passenger.index'
+import { Route as PassengerBusIdRouteImport } from './routes/passenger.bus.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PassengerIndexRoute = PassengerIndexRouteImport.update({
+  id: '/passenger/',
+  path: '/passenger/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassengerBusIdRoute = PassengerBusIdRouteImport.update({
+  id: '/passenger/bus/$id',
+  path: '/passenger/bus/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/passenger/': typeof PassengerIndexRoute
+  '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/passenger': typeof PassengerIndexRoute
+  '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/passenger/': typeof PassengerIndexRoute
+  '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/passenger/' | '/passenger/bus/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/passenger' | '/passenger/bus/$id'
+  id: '__root__' | '/' | '/passenger/' | '/passenger/bus/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PassengerIndexRoute: typeof PassengerIndexRoute
+  PassengerBusIdRoute: typeof PassengerBusIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/passenger/': {
+      id: '/passenger/'
+      path: '/passenger'
+      fullPath: '/passenger/'
+      preLoaderRoute: typeof PassengerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passenger/bus/$id': {
+      id: '/passenger/bus/$id'
+      path: '/passenger/bus/$id'
+      fullPath: '/passenger/bus/$id'
+      preLoaderRoute: typeof PassengerBusIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PassengerIndexRoute: PassengerIndexRoute,
+  PassengerBusIdRoute: PassengerBusIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

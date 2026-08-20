@@ -7,7 +7,7 @@ type BusMarkerProps = {
   heading?: number | null;
   live?: boolean;
   selected?: boolean;
-  onClick?: () => void;
+  onClick?: (() => void) | undefined;
   /** Position in percent of the map container. */
   x: number;
   y: number;

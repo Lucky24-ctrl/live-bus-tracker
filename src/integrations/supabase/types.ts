@@ -14,7 +14,97 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      buses: {
+        Row: {
+          bus_number: string
+          created_at: string
+          id: string
+          route_id: string | null
+        }
+        Insert: {
+          bus_number: string
+          created_at?: string
+          id?: string
+          route_id?: string | null
+        }
+        Update: {
+          bus_number?: string
+          created_at?: string
+          id?: string
+          route_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "buses_route_id_fkey"
+            columns: ["route_id"]
+            isOneToOne: false
+            referencedRelation: "routes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      live_locations: {
+        Row: {
+          accuracy: number | null
+          bus_id: string
+          heading: number | null
+          id: string
+          latitude: number
+          longitude: number
+          speed: number | null
+          updated_at: string
+        }
+        Insert: {
+          accuracy?: number | null
+          bus_id: string
+          heading?: number | null
+          id?: string
+          latitude: number
+          longitude: number
+          speed?: number | null
+          updated_at?: string
+        }
+        Update: {
+          accuracy?: number | null
+          bus_id?: string
+          heading?: number | null
+          id?: string
+          latitude?: number
+          longitude?: number
+          speed?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "live_locations_bus_id_fkey"
+            columns: ["bus_id"]
+            isOneToOne: false
+            referencedRelation: "buses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routes: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          stops: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          stops?: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          stops?: Json
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

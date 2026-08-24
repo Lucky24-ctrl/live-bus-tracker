@@ -14,6 +14,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as DriverIndexRouteImport } from './routes/driver.index'
 import { Route as DriverTrackingRouteImport } from './routes/driver.tracking'
 import { Route as PassengerIndexRouteImport } from './routes/passenger.index'
+import { Route as ApiPublicGeoapifyHealthRouteImport } from './routes/api/public/geoapify-health'
 import { Route as PassengerBusIdRouteImport } from './routes/passenger.bus.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const PassengerIndexRoute = PassengerIndexRouteImport.update({
   path: '/passenger/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicGeoapifyHealthRoute = ApiPublicGeoapifyHealthRouteImport.update({
+  id: '/api/public/geoapify-health',
+  path: '/api/public/geoapify-health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PassengerBusIdRoute = PassengerBusIdRouteImport.update({
   id: '/passenger/bus/$id',
   path: '/passenger/bus/$id',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/driver/tracking': typeof DriverTrackingRoute
   '/driver/': typeof DriverIndexRoute
   '/passenger/': typeof PassengerIndexRoute
+  '/api/public/geoapify-health': typeof ApiPublicGeoapifyHealthRoute
   '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/driver/tracking': typeof DriverTrackingRoute
   '/driver': typeof DriverIndexRoute
   '/passenger': typeof PassengerIndexRoute
+  '/api/public/geoapify-health': typeof ApiPublicGeoapifyHealthRoute
   '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/driver/tracking': typeof DriverTrackingRoute
   '/driver/': typeof DriverIndexRoute
   '/passenger/': typeof PassengerIndexRoute
+  '/api/public/geoapify-health': typeof ApiPublicGeoapifyHealthRoute
   '/passenger/bus/$id': typeof PassengerBusIdRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/driver/tracking'
     | '/driver/'
     | '/passenger/'
+    | '/api/public/geoapify-health'
     | '/passenger/bus/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/driver/tracking'
     | '/driver'
     | '/passenger'
+    | '/api/public/geoapify-health'
     | '/passenger/bus/$id'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/driver/tracking'
     | '/driver/'
     | '/passenger/'
+    | '/api/public/geoapify-health'
     | '/passenger/bus/$id'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   DriverTrackingRoute: typeof DriverTrackingRoute
   DriverIndexRoute: typeof DriverIndexRoute
   PassengerIndexRoute: typeof PassengerIndexRoute
+  ApiPublicGeoapifyHealthRoute: typeof ApiPublicGeoapifyHealthRoute
   PassengerBusIdRoute: typeof PassengerBusIdRoute
 }
 
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PassengerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/geoapify-health': {
+      id: '/api/public/geoapify-health'
+      path: '/api/public/geoapify-health'
+      fullPath: '/api/public/geoapify-health'
+      preLoaderRoute: typeof ApiPublicGeoapifyHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/passenger/bus/$id': {
       id: '/passenger/bus/$id'
       path: '/passenger/bus/$id'
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   DriverTrackingRoute: DriverTrackingRoute,
   DriverIndexRoute: DriverIndexRoute,
   PassengerIndexRoute: PassengerIndexRoute,
+  ApiPublicGeoapifyHealthRoute: ApiPublicGeoapifyHealthRoute,
   PassengerBusIdRoute: PassengerBusIdRoute,
 }
 export const routeTree = rootRouteImport

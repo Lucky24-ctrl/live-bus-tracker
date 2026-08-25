@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 
 import { AppShell } from "@/components/layout/AppShell";
-import { MapView } from "@/components/map/MapView";
+import { InteractiveMap } from "@/components/map/InteractiveMap";
 import { BusCard } from "@/components/transit/BusCard";
 import { useFleet } from "@/hooks/use-fleet";
 import { isLive } from "@/lib/transit";

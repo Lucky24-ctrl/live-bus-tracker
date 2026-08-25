@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 
 import { AppShell } from "@/components/layout/AppShell";
-import { MapView } from "@/components/map/MapView";
+import { InteractiveMap } from "@/components/map/InteractiveMap";
 import { BusCard } from "@/components/transit/BusCard";
 import { useFleet } from "@/hooks/use-fleet";
 import { isLive } from "@/lib/transit";
@@ -43,7 +43,6 @@ function PassengerMap() {
     [fleet, routeFilter],
   );
 
-  const selected = visible.find((t) => t.bus.id === selectedId) ?? null;
   const liveCount = visible.filter((t) => isLive(t.location)).length;
 
   return (
@@ -52,13 +51,7 @@ function PassengerMap() {
       subtitle={`${liveCount} of ${visible.length} buses currently reporting`}
     >
       <div className="grid gap-4 lg:grid-cols-[1fr_20rem]">
-        <MapView
-          buses={visible}
-          stops={selected?.route?.stops ?? []}
-          selectedBusId={selectedId}
-          onSelectBus={setSelectedId}
-          className="h-[22rem] sm:h-[32rem]"
-        />
+        <InteractiveMap className="h-[22rem] sm:h-[32rem]" />
 
         <div className="flex flex-col gap-3">
           <select
